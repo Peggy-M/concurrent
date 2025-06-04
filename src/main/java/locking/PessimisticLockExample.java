@@ -1,4 +1,4 @@
-package com.peppa;
+package locking;
 
 public class PessimisticLockExample {
     private int balance = 100; // 账户初始余额
@@ -16,15 +16,6 @@ public class PessimisticLockExample {
             System.out.println(Thread.currentThread().getName() + " 取款成功，余额: " + balance);
         } else {
             System.out.println(Thread.currentThread().getName() + " 余额不足");
-        }
-    }
-
-    public static void main(String[] args) {
-        PessimisticLockExample account = new PessimisticLockExample();
-        
-        // 创建5个线程同时取款
-        for (int i = 0; i < 5; i++) {
-            new Thread(() -> account.withdraw(30), "线程" + i).start();
         }
     }
 }
