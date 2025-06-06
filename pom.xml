@@ -24,6 +24,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!--对象头查看工具-->
+        <dependency>
+            <groupId>org.openjdk.jol</groupId>
+            <artifactId>jol-core</artifactId>
+            <version>0.9</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
