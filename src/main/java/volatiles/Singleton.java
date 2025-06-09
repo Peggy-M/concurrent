@@ -3,7 +3,7 @@ package volatiles;
 public class Singleton {
     private static /* volatile */ Singleton instance; // 测试时去掉 volatile
 
-    private int value; // 用于检查对象是否初始化
+    private  int value; // 用于检查对象是否初始化
 
     private Singleton() {
         // 模拟初始化耗时操作，增加重排序概率
