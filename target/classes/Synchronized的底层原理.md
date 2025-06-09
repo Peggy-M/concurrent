@@ -35,44 +35,6 @@
 
 从上面的 HotSpot 下 `biasedLocking.cpp` 文件当中 revoke_bias 方法下就可以看到具体的锁降级流程。
 
-> 下面的运行案例可参考 UpgradeTest 测试类下的 upgrade 测试方法
-
-~~~ bash
-java.lang.Object object internals:
- OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
-      0     4        (object header)                           05 00 00 00 (00000101 00000000 00000000 00000000) (5)
-      4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)
-      8     4        (object header)                           e5 01 00 f8 (11100101 00000001 00000000 11111000) (-134217243)
-     12     4        (loss due to the next object alignment)
-Instance size: 16 bytes
-Space losses: 0 bytes internal + 4 bytes external = 4 bytes total
-
-main:java.lang.Object object internals:
- OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
-      0     4        (object header)                           05 20 2f 92 (00000101 00100000 00101111 10010010) (-1842405371)
-      4     4        (object header)                           c1 01 00 00 (11000001 00000001 00000000 00000000) (449)
-      8     4        (object header)                           e5 01 00 f8 (11100101 00000001 00000000 11111000) (-134217243)
-     12     4        (loss due to the next object alignment)
-Instance size: 16 bytes
-Space losses: 0 bytes internal + 4 bytes external = 4 bytes total
-
-t1:java.lang.Object object internals:
- OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
-      0     4        (object header)                           7a 98 0d b6 (01111010 10011000 00001101 10110110) (-1240622982)
-      4     4        (object header)                           c1 01 00 00 (11000001 00000001 00000000 00000000) (449)
-      8     4        (object header)                           e5 01 00 f8 (11100101 00000001 00000000 11111000) (-134217243)
-     12     4        (loss due to the next object alignment)
-Instance size: 16 bytes
-Space losses: 0 bytes internal + 4 bytes external = 4 bytes total
-~~~
-
-
-
 #### 偏向锁
 
-在 HotSpot 的作者研究发现，在绝大都数的情况下，锁不仅仅存在多线程的竞争关系，而且还存在总是有一个线程多次重复的获取，为了使线程获取锁的代价更底，从而引入了偏向锁，实现原理就是在 Mark Word 对象头信息，以及栈帧也就是同步方法的方法栈当中存储了偏向锁的线程  ID ，以后该线程在进入和退出同步方法的失败就不需要进行 CAS 操作来完成加锁与解锁了。当一个线程进来，先检查一下 Mark Word 当中是否存储着指向当前线程的偏向锁，如果获取锁成功，如果没有就检查一下 Mark Word 偏向锁的标识是否设置为了1 ，如果没有就直接通过 CAS 竞争锁资源，如果设置了则就需要通过 CAS 尝试将当前的偏向锁指向当前的线程。
-
-#### 偏向锁的撤销
-
-
-
+在 HotSpot 的作者研究发现，在绝大都数的情况下，锁不仅仅存在多线程的竞争关系，而且还存在总是有一个线程多次重复的获取，
