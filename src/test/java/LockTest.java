@@ -1,4 +1,5 @@
 
+import locking.LockInterruptionExample;
 import locking.OptimisticLockExample;
 import locking.PessimisticLockExample;
 import org.junit.Test;
@@ -42,6 +43,12 @@ public class LockTest {
             thread.join();
         }
 
+    }
+
+    @Test
+    public void interruptionTest() throws InterruptedException {
+        LockInterruptionExample account = new LockInterruptionExample();
+        account.lockInterrupted();
     }
 
 }
