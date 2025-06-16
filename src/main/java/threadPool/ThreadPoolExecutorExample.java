@@ -71,7 +71,6 @@ public class ThreadPoolExecutorExample {
         executorService.execute(ThreadPoolExecutorExample::printf1);
         executorService.execute(ThreadPoolExecutorExample::printf2);
         executorService.execute(ThreadPoolExecutorExample::printf3);
-
     }
 
     //当第一次提交任务到线程池时,会直接构建一个工程线程,这个工作线程在执行完后, 60 秒没有任务可以执行后,会结束，如果等待 60 秒内有任务会再次拿到这个任务再执行
@@ -119,8 +118,5 @@ public class ThreadPoolExecutorExample {
         System.out.println("开始时间:--> " + new Date());
         long result = forkJoinPool.invoke(new SumTask(maxArray, 0, maxArray.length));
         System.out.println("结束时间:--> " + new Date());
-
-
     }
-
 }

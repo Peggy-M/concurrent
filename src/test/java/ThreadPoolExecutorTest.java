@@ -66,5 +66,10 @@ public class ThreadPoolExecutorTest {
     public void fixedThreadPoolTest(){
         ThreadPoolExecutorExample example = new ThreadPoolExecutorExample();
         example.workStealingThread();
+        try {
+            Thread.sleep(50000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
